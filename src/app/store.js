@@ -1,5 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
+import sensorsReducer from "../features/sensors/sensorsSlice";
+import actorsReducer from "../features/actors/actorsSlice";
 
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    sensors: sensorsReducer,
+    actors: actorsReducer,
+  },
 });
