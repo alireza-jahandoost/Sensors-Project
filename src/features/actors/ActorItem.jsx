@@ -31,6 +31,7 @@ const ActorItem = ({ actor }) => {
           <div className="d-flex justify-content-end align-items-end h-100">
             <Button
               disabled={actor.isLoading}
+              className="fw-bold"
               onClick={handleChangeStatus}
               style={{ width: "120px", height: "40px" }}
               variant={

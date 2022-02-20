@@ -42,7 +42,7 @@ const ActorsList = () => {
 
   return (
     <ListContainer>
-      <h2 className="display-6 mb-4 text-center">اکتورها</h2>
+      <h2 className="display-5 mb-4 text-center">اکتورها</h2>
       {content}
     </ListContainer>
   );
