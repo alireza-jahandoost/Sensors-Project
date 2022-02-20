@@ -9,9 +9,7 @@ export const fetchActors = createAsyncThunk("actors/fetchActors", async () => {
       accept: "application/json",
     },
   });
-  console.log(response);
   const data = await response.json();
-  console.log(data);
   return data;
 });
 
@@ -30,7 +28,6 @@ export const changeActorStatus = createAsyncThunk(
       }),
     });
     const data = await response.json();
-    console.log(data);
     return data;
   }
 );
@@ -41,6 +38,16 @@ const initialState = {
   // status: idle | pending | fulfilled | rejected
   status: "idle",
 };
+
+/**
+ * structure of each actor:
+ * {
+ *    actorid: number,
+ *    actorname: string,
+ *    actorstatus: number,
+ *    isLoading: boolean
+ * }
+ */
 
 // Slice
 const actorsSlice = createSlice({
@@ -54,12 +61,38 @@ const actorsSlice = createSlice({
       })
       .addCase(fetchActors.fulfilled, (state, action) => {
         const { actors, datetime } = action.payload;
-        state.data = actors;
+        const newActors = actors.map((actor) => ({
+          ...actor,
+          isLoading: false,
+        }));
+        state.data = newActors;
         state.datetime = datetime;
         state.status = "fulfilled";
       })
       .addCase(fetchActors.rejected, (state) => {
         state.status = "rejected";
+      })
+      .addCase(changeActorStatus.pending, (state, action) => {
+        const { actorId } = action.meta.arg;
+        const newActors = state.data.map((actor) =>
+          actor.actorid === actorId ? { ...actor, isLoading: true } : actor
+        );
+        state.data = newActors;
+      })
+      .addCase(changeActorStatus.fulfilled, (state, action) => {
+        const receivedActor = action.payload;
+        const actorIndex = state.data.findIndex(
+          (actor) => actor.actorid === receivedActor.actorid
+        );
+        state.data[actorIndex].isLoading = false;
+        state.data[actorIndex].actorstatus = receivedActor.actorstatus;
+      })
+      .addCase(changeActorStatus.rejected, (state, action) => {
+        const { actorId } = action.meta.arg;
+        const newActors = state.data.map((actor) =>
+          actor.actorid === actorId ? { ...actor, isLoading: false } : actor
+        );
+        state.data = newActors;
       });
   },
 });
