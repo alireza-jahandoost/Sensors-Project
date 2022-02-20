@@ -10,10 +10,10 @@ function App() {
     <MainContainer>
       <Container>
         <Row>
-          <Col lg={6}>
+          <Col lg={6} className="mb-4 mb-lg-0">
             <ActorsList />
           </Col>
-          <Col lg={6}>
+          <Col lg={6} className="mb-4 mb-lg-0">
             <SensorsList />
           </Col>
         </Row>
