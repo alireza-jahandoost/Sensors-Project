@@ -7,7 +7,7 @@ import {
 } from "./sensorsSlice";
 import Spinner from "../../components/Spinner/Spinner";
 import SensorItem from "./SensorItem";
-import { Container } from "react-bootstrap";
+import ListContainer from "../../components/ListContainer/ListContainer";
 
 const SensorsList = () => {
   const dispatch = useDispatch();
@@ -41,10 +41,10 @@ const SensorsList = () => {
   })();
 
   return (
-    <Container className="bg-white p-4 shadow rounded border h-100">
+    <ListContainer>
       <h2 className="display-6 mb-4 text-center">سنسورها</h2>
       {content}
-    </Container>
+    </ListContainer>
   );
 };
 

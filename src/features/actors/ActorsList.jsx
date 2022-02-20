@@ -7,7 +7,7 @@ import {
 } from "./actorsSlice";
 import Spinner from "../../components/Spinner/Spinner";
 import ActorItem from "./ActorItem";
-import { Container } from "react-bootstrap";
+import ListContainer from "../../components/ListContainer/ListContainer";
 
 const ActorsList = () => {
   const dispatch = useDispatch();
@@ -41,10 +41,10 @@ const ActorsList = () => {
   })();
 
   return (
-    <Container className="bg-white p-4 shadow rounded border h-100">
+    <ListContainer>
       <h2 className="display-6 mb-4 text-center">اکتورها</h2>
       {content}
-    </Container>
+    </ListContainer>
   );
 };
 
