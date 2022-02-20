@@ -41,7 +41,7 @@ const ActorsList = () => {
   })();
 
   return (
-    <Container className="bg-white p-4 shadow rounded border">
+    <Container className="bg-white p-4 shadow rounded border h-100">
       <h2 className="display-6 mb-4 text-center">اکتورها</h2>
       {content}
     </Container>

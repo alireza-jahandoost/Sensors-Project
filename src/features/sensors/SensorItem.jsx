@@ -22,7 +22,7 @@ const SensorItem = ({ sensor }) => {
           </div>
         </Col>
         <Col xs={4}>
-          <div className="d-flex justify-content-center align-items-center">
+          <div className="d-flex justify-content-center align-items-center h-100">
             <Image
               className=""
               src={sensorTypes[sensor.sensortype].imageSrc}
