@@ -16,11 +16,14 @@ const ActorsList = () => {
 
   useEffect(() => {
     dispatch(fetchActors());
+    const intervalRef = setInterval(() => dispatch(fetchActors()), 10000);
+    return () => clearInterval(intervalRef);
   }, [dispatch]);
 
   const content = (() => {
     switch (actorsStatus) {
-      case "fulfilled": {
+      case "fulfilled":
+      case "refreshing": {
         const Items = actorsData.map((actor) => (
           <ActorItem key={actor.actorid} actor={actor} />
         ));

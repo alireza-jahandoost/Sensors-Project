@@ -16,11 +16,14 @@ const SensorsList = () => {
 
   useEffect(() => {
     dispatch(fetchSensors());
+    const intervalRef = setInterval(() => dispatch(fetchSensors()), 10000);
+    return () => clearInterval(intervalRef);
   }, [dispatch]);
 
   const content = (() => {
     switch (sensorsStatus) {
-      case "fulfilled": {
+      case "fulfilled":
+      case "refreshing": {
         const Items = sensorsData.map((sensor) => (
           <SensorItem key={sensor.sensorid} sensor={sensor} />
         ));

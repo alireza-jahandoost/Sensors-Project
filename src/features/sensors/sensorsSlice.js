@@ -19,7 +19,7 @@ export const fetchSensors = createAsyncThunk(
 const initialState = {
   datetime: null,
   data: [],
-  // status: idle | pending | fulfilled | rejected
+  // status: idle | pending | fulfilled | rejected | refreshing
   status: "idle",
 };
 
@@ -31,7 +31,11 @@ const sensorsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchSensors.pending, (state) => {
-        state.status = "pending";
+        if (state.status === "idle") {
+          state.status = "pending";
+        } else {
+          state.status = "refreshing";
+        }
       })
       .addCase(fetchSensors.fulfilled, (state, action) => {
         const { datetime, sensors } = action.payload;
@@ -40,7 +44,12 @@ const sensorsSlice = createSlice({
         state.status = "fulfilled";
       })
       .addCase(fetchSensors.rejected, (state, action) => {
-        state.status = "rejected";
+        if (state.status === "pending") {
+          state.status = "rejected";
+        } else {
+          // Because currectly we have data and just refreshing fails
+          state.status = "fulfilled";
+        }
       });
   },
 });

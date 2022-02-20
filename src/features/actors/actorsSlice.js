@@ -35,7 +35,7 @@ export const changeActorStatus = createAsyncThunk(
 const initialState = {
   datetime: null,
   data: [],
-  // status: idle | pending | fulfilled | rejected
+  // status: idle | pending | fulfilled | rejected | refreshing
   status: "idle",
 };
 
@@ -57,7 +57,11 @@ const actorsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchActors.pending, (state) => {
-        state.status = "pending";
+        if (state.status === "idle") {
+          state.status = "pending";
+        } else {
+          state.status = "refreshing";
+        }
       })
       .addCase(fetchActors.fulfilled, (state, action) => {
         const { actors, datetime } = action.payload;
@@ -70,7 +74,12 @@ const actorsSlice = createSlice({
         state.status = "fulfilled";
       })
       .addCase(fetchActors.rejected, (state) => {
-        state.status = "rejected";
+        if (state.status === "pending") {
+          state.status = "rejected";
+        } else {
+          // Because currectly we have data and just refreshing fails
+          state.status = "fulfilled";
+        }
       })
       .addCase(changeActorStatus.pending, (state, action) => {
         const { actorId } = action.meta.arg;
