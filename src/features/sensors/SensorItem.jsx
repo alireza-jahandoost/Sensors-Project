@@ -1,8 +1,15 @@
-import { Container, Row, Col, Image, ProgressBar } from "react-bootstrap";
+import { Container, Row, Col, Image } from "react-bootstrap";
 import { sensorTypes } from "./sensorTypes";
+import { Progress } from "antd";
 
 const SensorItem = ({ sensor }) => {
   const sensorInfo = sensorTypes[sensor.sensortype];
+
+  const percentOfProgress =
+    sensorInfo.showType === "percent"
+      ? sensor.sensordata
+      : (sensor.sensordata / (sensorInfo.maximum - sensorInfo.minimum)) * 100;
+
   return (
     <Container className="shadow border my-2 p-3 rounded">
       <Row>
@@ -15,9 +22,14 @@ const SensorItem = ({ sensor }) => {
             </p>
           </div>
           <div>
-            <ProgressBar
-              now={sensor.sensordata}
-              label={`${sensor.sensordata}%`}
+            <Progress
+              format={(percent) =>
+                sensorInfo.showType === "percent"
+                  ? `${percent}%`
+                  : `${sensor.sensordata}/${sensorInfo.maximum}`
+              }
+              percent={percentOfProgress}
+              status="normal"
             />
           </div>
         </Col>
