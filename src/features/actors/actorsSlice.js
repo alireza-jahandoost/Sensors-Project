@@ -1,8 +1,4 @@
-import {
-  createSlice,
-  createAsyncThunk,
-  createSelector,
-} from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { actors as actorsRoutes } from "../../api/routes";
 
 // Thunks
