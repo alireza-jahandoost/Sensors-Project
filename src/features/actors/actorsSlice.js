@@ -1,4 +1,8 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import {
+  createSlice,
+  createAsyncThunk,
+  createSelector,
+} from "@reduxjs/toolkit";
 import { actors as actorsRoutes } from "../../api/routes";
 
 // Thunks
@@ -96,5 +100,10 @@ const actorsSlice = createSlice({
       });
   },
 });
+
+// Selectors
+export const actorsDataSelector = (state) => state.actors.data;
+export const actorsStatusSelector = (state) => state.actors.status;
+export const actorsDateTimeSelector = (state) => state.actors.datetime;
 
 export default actorsSlice.reducer;
